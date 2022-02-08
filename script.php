@@ -21,25 +21,33 @@ $sql = "SELECT * FROM users";
 $result = $conn->query($sql);
 
 $login_success = false;
-$name = "";
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-		if($row["username"] == $_POST["username"] && $row["password"] == $_POST["password"]) {
-			$login_success = true;
-			$name = $row["username"];
-            $_SESSION["user"] = $name;
-            
-	    }
-    } 
-} else {
-    echo "0 results";
+// Kontrollera login
+if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
+    $login_succes = true;
+    $user = $_SESSION['user'];
+    echo "Inloggad som $user";
+}
+elseif(isset($_SESSION["logged_in"]) == false && isset($_POST["username"])) {
+    $name = "";
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            if($row["username"] == $_POST["username"] && $row["password"] == $_POST["password"]) {
+                $login_success = true;
+                $name = $row["username"];
+                $_SESSION["user"] = $name;
+            }
+        } 
+    } else {
+        echo "0 results";
+    }
 }
 
 if($login_success) {
     echo "<h1>Forum för fårskallar</h1>";
-    echo "Welcome " . $name . "!<br><br>";
-    echo "<button style='margin-bottom: 50px;'>Skapa tråd</button><br>"; 
+    echo "Välkommen " . $name . "!<br><br>";
+    echo "<a href='addtopic.php'><button style='margin-bottom: 50px;'>Skapa tråd</button></a><br>"; 
     echo "Det finns X trådar:";
+    $_SESSION["logged_in"] = true;
 
 
 } else {
