@@ -33,6 +33,7 @@ elseif(isset($_SESSION["logged_in"]) == false && isset($_POST["username"])) {
         while($row = $result->fetch_assoc()) {
             if($row["username"] == $_POST["username"] && $row["password"] == $_POST["password"]) {
                 $login_success = true;
+                $_SESSION["logged_in"] = true;
                 $name = $row["username"];
                 $_SESSION["user"] = $name;
             }
@@ -45,10 +46,8 @@ elseif(isset($_SESSION["logged_in"]) == false && isset($_POST["username"])) {
 if($login_success) {
     echo "<h1>Forum för fårskallar</h1>";
     echo "Välkommen " . $name . "!<br><br>";
-    echo "<a href='addtopic.php'><button style='margin-bottom: 50px;'>Skapa tråd</button></a><br>"; 
+    echo "<a href='addtopic.php'><button style='margin-bottom: 50px;'>Skapa tråd</button></a><br>";
     echo "Det finns X trådar:";
-    $_SESSION["logged_in"] = true;
-
 
 } else {
     echo "Incorrect login credentials";

@@ -39,10 +39,11 @@ if ($result !== false && $result->num_rows > 0) {
             </a>";
 
 } else {
-    $sql = "INSERT INTO topics (op, topic) VALUES ('$op', '$header')";
+    $time = data('Y-m-d H:i:s')
+    $sql = "INSERT INTO topics (op, topic, creationTime) VALUES ('$op', '$header', '$time')";
     $result = $conn->query($sql);
 
-    $sql = "INSERT INTO posts (content, topic) VALUES ('$content', '$header')";
+    $sql = "INSERT INTO posts (content, topic, user) VALUES ('$content', '$header', '$op')";
     $result = $conn->query($sql);
 
     header("Location: http://localhost/forum-for-farskallar/script.php");
