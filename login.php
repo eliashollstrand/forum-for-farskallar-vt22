@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +10,11 @@
     <title>Document</title>
 </head>
 <body>
+    <?php
+        session_unset();
+    ?>
     <h1>Forum för fårskallar</h1>
-
+    
     <button onclick="showLogin()">Log in</button>
     <div id="loginForm" style="display: none; padding-top: 10px">
         <form action="script.php" method="post">

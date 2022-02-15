@@ -39,7 +39,7 @@ if ($result !== false && $result->num_rows > 0) {
             </a>";
 
 } else {
-    $time = data('Y-m-d H:i:s')
+    $time = date('Y-m-d H:i:s');
     $sql = "INSERT INTO topics (op, topic, creationTime) VALUES ('$op', '$header', '$time')";
     $result = $conn->query($sql);
 

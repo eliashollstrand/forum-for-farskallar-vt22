@@ -23,9 +23,8 @@ $result = $conn->query($sql);
 $login_success = false;
 // Kontrollera login
 if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
-    $login_succes = true;
+    $login_success = true;
     $user = $_SESSION['user'];
-    echo "Inloggad som $user";
 }
 elseif(isset($_SESSION["logged_in"]) == false && isset($_POST["username"])) {
     $name = "";
@@ -44,13 +43,28 @@ elseif(isset($_SESSION["logged_in"]) == false && isset($_POST["username"])) {
 }
 
 if($login_success) {
+    $name = $_SESSION["user"];
     echo "<h1>Forum för fårskallar</h1>";
     echo "Välkommen " . $name . "!<br><br>";
     echo "<a href='addtopic.php'><button style='margin-bottom: 50px;'>Skapa tråd</button></a><br>";
     echo "Det finns X trådar:";
 
+    $sql = "SELECT * FROM topics";
+    $result = $conn->query($sql);
+
+    while($row = $result->fetch_assoc()) {
+        
+    } 
+
+    echo "<br><a href='login.php'>
+            <button>Log out</button>
+            </a>";
+
 } else {
     echo "Incorrect login credentials";
+    echo "<br><a href='login.php'>
+            <button>Back to log in</button>
+            </a>";
 }
 $conn->close();
 ?>
