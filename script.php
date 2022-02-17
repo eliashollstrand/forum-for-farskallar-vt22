@@ -47,14 +47,34 @@ if($login_success) {
     echo "<h1>Forum för fårskallar</h1>";
     echo "Välkommen " . $name . "!<br><br>";
     echo "<a href='addtopic.php'><button style='margin-bottom: 50px;'>Skapa tråd</button></a><br>";
-    echo "Det finns X trådar:";
 
-    $sql = "SELECT * FROM topics";
+    $sql = "SELECT COUNT(*) as num_posts FROM topics";
     $result = $conn->query($sql);
 
+    $num_posts = "";
+    while ($row = $result->fetch_assoc()) {
+        $num_posts = $row["num_posts"];
+    }
+
+    echo "Det finns $num_posts trådar:";
+
+    $sql = "SELECT * FROM topics ORDER BY creationTime DESC";
+    $result = $conn->query($sql);
+
+    $html = file_get_contents("templates/threads.html");
+    $text_array = explode("***PHP***", $html);
+
+    
     while($row = $result->fetch_assoc()) {
-        
+        echo $text_array[0];
+
+        $text = str_replace("***topic***", $row["topic"], $text_array[1]);
+        $text = str_replace("***op***", $row["op"], $text);
+        $text = str_replace("***time***", $row["creationTime"], $text);
+
+        echo $text;  
     } 
+    echo $text_array[2];
 
     echo "<br><a href='login.php'>
             <button>Log out</button>

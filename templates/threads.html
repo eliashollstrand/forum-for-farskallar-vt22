@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
 <body>
+    <br>
     <table>
         <tbody>
             <tr>
@@ -16,14 +9,16 @@
                 <th>Senaste inlägg</th>
             </tr>
             ***PHP***
-            <form action="readtopic.php" method="post">
-                <input type="hidden" name="user" value="***user***">  
-                <input type="hidden" name="userpass" value="***userpass***">  
-                <input type="hidden" name="topic" value="***topic***">  
-                <input type="hidden" name="op" value="***op***">
-                <input class="result" type="submit" name="submit" value="Läs">
-            </form>
             <tr>
+                <td>
+                    <form action="readtopic.php" method="post">
+                        <input type="hidden" name="user" value="***user***">  
+                        <input type="hidden" name="userpass" value="***userpass***">  
+                        <input type="hidden" name="topic" value="***topic***">  
+                        <input type="hidden" name="op" value="***op***">
+                        <input class="result" type="submit" name="submit" value="Läs">
+                    </form>
+                </td>
                 <td>***topic***</td>
                 <td>***op***</td>
                 <td>***time***</td>

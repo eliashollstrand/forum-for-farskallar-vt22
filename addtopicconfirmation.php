@@ -43,7 +43,7 @@ if ($result !== false && $result->num_rows > 0) {
     $sql = "INSERT INTO topics (op, topic, creationTime) VALUES ('$op', '$header', '$time')";
     $result = $conn->query($sql);
 
-    $sql = "INSERT INTO posts (content, topic, user) VALUES ('$content', '$header', '$op')";
+    $sql = "INSERT INTO posts (content, topic, user, creationTime) VALUES ('$content', '$header', '$op', '$time')";
     $result = $conn->query($sql);
 
     header("Location: http://localhost/forum-for-farskallar/script.php");
