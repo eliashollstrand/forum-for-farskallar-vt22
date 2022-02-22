@@ -16,7 +16,7 @@
     $subscribe = $_POST["subscribe"];
     $op = "";
 
-    $sql = "SELECT topic FROM topics WHERE topic = '$topic'";
+    $sql = "SELECT * FROM topics WHERE topic = '$topic'";
     $result = $conn->query($sql);
     while($row = $result->fetch_assoc()) {
         $op = $row["op"];

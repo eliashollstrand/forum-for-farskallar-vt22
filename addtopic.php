@@ -42,7 +42,7 @@ session_start();
             </a>";
     }
 ?>
-    <form action="comment.php" method="post">
+    <form action="addtopicconfirmation.php" method="post">
         Rubrik
         <br>
         <input type="text" name="header">

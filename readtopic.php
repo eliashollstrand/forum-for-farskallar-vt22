@@ -28,16 +28,9 @@ session_start();
     if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
         $user = $_SESSION['user'];
 
-        $url = "";
-        if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
-        $url = "https://";   
-        else  
-            $url = "http://";   
-            // Append the host(domain name, ip) to the URL.   
-            $url.= $_SERVER['HTTP_HOST'];   
-            
-            // Append the requested resource location to the URL   
-            $url.= $_SERVER['REQUEST_URI'];    
+        $url = "http://";   
+        $url.= $_SERVER['HTTP_HOST'];   
+        $url.= $_SERVER['REQUEST_URI'];    
 
         $topic = "";
         if(isset($_POST["topic"])) {
@@ -45,6 +38,7 @@ session_start();
         } else {
             $topic = $_GET["topic"];
         }
+
         $op = "";
         if(isset($_POST["op"])) {
             $op = $_POST["op"];
@@ -53,7 +47,10 @@ session_start();
         }
 
         echo "Inloggad som $user <br>";
-        echo "<h2>" . $topic . "</h2>";
+        echo "<br><a href='script.php'>
+            <button>Back to posts</button>
+            </a>";
+        echo "<br><h2>" . $topic . "</h2>";
         echo "<p><strong>Denna tråd startades av " . $op . "</strong></p>";
 
         $servername = "localhost";
@@ -67,7 +64,7 @@ session_start();
             die("Connection failed: " . mysqli_connect_error());
         }   
 
-        $sql = "SELECT * FROM posts WHERE topic = '$topic' ORDER BY creationTime DESC";
+        $sql = "SELECT * FROM posts WHERE topic = '$topic'";
         $result = $conn->query($sql);
 
         $html = file_get_contents("templates/posts.html");
