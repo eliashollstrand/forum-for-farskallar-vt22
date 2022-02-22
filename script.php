@@ -71,9 +71,10 @@ if($login_success) {
         $text = str_replace("***topic***", $row["topic"], $text_array[1]);
         $text = str_replace("***op***", $row["op"], $text);
         $text = str_replace("***time***", $row["creationTime"], $text);
-
+        
         echo $text;  
     } 
+
     echo $text_array[2];
 
     echo "<br><a href='login.php'>

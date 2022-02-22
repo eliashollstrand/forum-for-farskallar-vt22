@@ -3,15 +3,29 @@
     <table>
         <tbody>
             ***PHP***
-            <tr>
+            <tr class="result">
                 <td>
                     Skrivet av ***user*** <br>
                     ***time***
                 </td>
+                <td></td>
                 <td>***content***</td>
             </tr>
             ***PHP***
         </tbody>
     </table>
+    <br>
+    <form action="comment.php" method="post">
+        Skriv en kommentar
+        <br>
+        <textarea name="content" cols="50" rows="10"></textarea>
+        <br>
+        Meddela mig via email vid nya inlägg:
+        <input type="checkbox" name="subscribe" value="ok" checked>
+        <br>
+        <input type="hidden" name="topic" value="***topic***">  
+        <input type="hidden" name="user" value="***user***">  
+        <input type="submit" name="submit" value="Kommentera">
+    </form>
 </body>
 </html>

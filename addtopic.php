@@ -37,12 +37,12 @@ session_start();
     }
     else {
         echo "Not logged in<br>";
-        echo "<a href='login.html'>
+        echo "<a href='login.php'>
             <button>Back to log in</button>
             </a>";
     }
 ?>
-    <form action="addtopicconfirmation.php" method="post">
+    <form action="comment.php" method="post">
         Rubrik
         <br>
         <input type="text" name="header">

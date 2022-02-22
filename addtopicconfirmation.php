@@ -37,7 +37,7 @@ if ($result !== false && $result->num_rows > 0) {
     echo "<a href='showtopic.php'>
             <button>Go to $header</button>
             </a>";
-
+    
 } else {
     $time = date('Y-m-d H:i:s');
     $sql = "INSERT INTO topics (op, topic, creationTime) VALUES ('$op', '$header', '$time')";
