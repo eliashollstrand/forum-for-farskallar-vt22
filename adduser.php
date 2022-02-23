@@ -8,6 +8,13 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
     
@@ -31,10 +38,10 @@ $sql = "SELECT * from users where username = '$username'";
 $result = $conn->query($sql);
 
 if($result->num_rows == 0) {
-    $sql = "INSERT INTO users (name, username, password) VALUES ('$name', '$username', '$password')";
+    $sql = "INSERT INTO users (name, username, password, subscriptions) VALUES ('$name', '$username', '$password', '')";
     $result = $conn->query($sql);
 
-    header("Location: login.html");
+    header("Location: login.php");
     die();
 } else {
     echo "Username already taken<br>";
