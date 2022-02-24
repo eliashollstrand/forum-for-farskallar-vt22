@@ -30,7 +30,7 @@ if(!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$name = $_POST["name"];
+$email = $_POST["email"];
 $username = $_POST["username"];
 $password = $_POST["password"];
 
@@ -38,7 +38,7 @@ $sql = "SELECT * from users where username = '$username'";
 $result = $conn->query($sql);
 
 if($result->num_rows == 0) {
-    $sql = "INSERT INTO users (name, username, password, subscriptions) VALUES ('$name', '$username', '$password', '')";
+    $sql = "INSERT INTO users (email, username, password, subscriptions) VALUES ('$email', '$username', '$password', '')";
     $result = $conn->query($sql);
 
     header("Location: login.php");
