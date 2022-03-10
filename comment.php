@@ -1,5 +1,15 @@
 <?php
     session_start();
+
+    //Import PHPMailer classes into the global namespace
+    //These must be at the top of your script, not inside a function
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
+
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -27,41 +37,56 @@
     $result = $conn->query($sql);
 
 
+    $exists = false;
     $sql = "SELECT * FROM users";
     $result = $conn->query($sql);
     while($row = $result->fetch_assoc()) {
         $subs = explode(",", $row["subscriptions"]);
         for($i = 0; $i < count($subs); $i++) {
-            echo $subs[$i];
-            if($subs[$i] == $topic) {
-                $msg = "Det finns nya kommentarer i tråden $topic!";
-                $msg = wordwrap($msg, 70);
-                mail($row['email'], "Forum för fårskallar - Ny kommentar", $msg);
-                break;
+            // echo strlen(substr($subs[$i], 1));
+            if(substr($subs[$i], 1) == $topic) {
+                
+                if($row["username"] == $user) {
+                    $exists = true;
+                }
+
+                //Create an instance; passing `true` enables exceptions
+                $mail = new PHPMailer(true);
+
+                try {
+                    //Server settings
+                    $mail->SMTPDebug = 1;                      //Enable verbose debug output
+                    $mail->isSMTP();                                            //Send using SMTP
+                    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                    $mail->Username   = 'forumforfarskallar@gmail.com';                     //SMTP username
+                    $mail->Password   = 'farskalle123';                               //SMTP password
+                    $mail->SMTPSecure = "tls";            //Enable implicit TLS encryption
+                    $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+                    //Recipient
+                    $mail->setFrom('forumforfarskallar@gmail.com', 'Forum för fårskallar');
+                    $mail->addAddress($row["email"]);     //Add a recipient
+
+                    //Content
+                    $mail->isHTML(true);                                  //Set email format to HTML
+                    $mail->Subject = "Nya kommentarer i tråden $topic!";
+                    $mail->Body    = "Det finns nya kommentarer i tråden $topic!";
+                    $mail->AltBody = "Det finns nya kommentarer i tråden $topic!";
+
+                    $mail->send();
+                    echo 'Message has been sent';
+                } catch (Exception $e) {
+                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                }
             }
         }
     } 
 
-    $sql = "SELECT * FROM users";
-    $result = $conn->query($sql);
-    $count = 0;
-    while($row = $result->fetch_assoc()) {
-        $subs = explode(",", preg_replace('/' . " " . '/', "", $row["subscriptions"]), 1);
-        for($i = 0; $i < count($subs); $i++) {
-            echo "Hej";
-            echo $subs[$i];
-            echo $topic;
-            if($subs[$i] == $topic) {
-                $count += 1;
-            }
-        }
-    } 
-    echo $count;
-
-    if($subscribe == "ok" && $count == 0) {
+    if($subscribe == "ok" && $exists == false) {
         $sql = "UPDATE users SET subscriptions = CONCAT(subscriptions, ' ', '$topic,') WHERE username = '$user';";
         $result = $conn->query($sql);
     }
 
-    // header("Location: http://localhost/forum-for-farskallar/readtopic.php?topic=$topic&op=$op");
+    header("Location: http://localhost/forum-for-farskallar/readtopic.php?topic=$topic&op=$op");
 ?>

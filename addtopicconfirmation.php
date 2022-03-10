@@ -52,20 +52,8 @@ if ($result !== false && $result->num_rows > 0) {
 
     $sql = "INSERT INTO posts (content, topic, user, creationTime) VALUES ('$content', '$header', '$op', '$time')";
     $result = $conn->query($sql);
-    
-    $sql = "SELECT * FROM users";
-    $result = $conn->query($sql);
-    $count = 0;
-    while($row = $result->fetch_assoc()) {
-        $subs = explode(",", $row["subscriptions"]);
-        for($i = 0; $i < count($subs); $i++) {
-            if($subs[$i] == $topic) {
-                $count += 1;
-            }
-        }
-    } 
-    
-    if($subscribe == "ok" && $count == 0) {
+
+    if($subscribe == "ok") {
         $sql = "UPDATE users SET subscriptions = CONCAT(subscriptions, ' ', '$header,') WHERE username = '$op';";
         $result = $conn->query($sql);
     }

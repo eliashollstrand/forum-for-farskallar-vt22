@@ -39,7 +39,7 @@ elseif(isset($_SESSION["logged_in"]) == false && isset($_POST["username"])) {
     $name = "";
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            if($row["username"] == $_POST["username"] && $row["password"] == $_POST["password"]) {
+            if($row["username"] == $_POST["username"] && password_verify($_POST["password"], $row["password"])) {
                 $login_success = true;
                 $_SESSION["logged_in"] = true;
                 $name = $row["username"];
