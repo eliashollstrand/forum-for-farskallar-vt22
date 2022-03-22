@@ -55,7 +55,10 @@ session_start();
         echo "<br><a href='script.php'>
             <button class='btn btn-secondary'>Tillbaka till trådarna</button>
             </a>";
-        echo "<br><br><h2>" . $topic . "</h2>";
+        echo "<br><br><h2 style='display: inline-block;'>" . $topic . "</h2>";
+        echo "<a href='readtopic.php' style='text-decoration: none;'>
+                <button style='margin-bottom: 15px; margin-left: 10px; font-size: 10px; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' class='btn btn-light'>Gilla denna tråd</i></button>
+            </a>";
         echo "<p>Denna tråd startades av <strong>" . $op . "</strong></p>";
 
         $servername = "localhost";
