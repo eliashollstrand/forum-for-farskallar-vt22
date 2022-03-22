@@ -1,5 +1,5 @@
 # Forum för fårskallar
-Forum där användare kan diskutera programmering och andra dataämnen.
+Forum där användare kan diskutera olika ämnen.
 
 Projekt i kursen Webbserverprogrammering 1
 
