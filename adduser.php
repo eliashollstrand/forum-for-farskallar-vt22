@@ -38,7 +38,7 @@ $sql = "SELECT * from users where username = '$username'";
 $result = $conn->query($sql);
 
 if($result->num_rows == 0) {
-    $sql = "INSERT INTO users (email, username, password, subscriptions) VALUES ('$email', '$username', '$password', '')";
+    $sql = "INSERT INTO users (email, username, password, subscriptions, liked) VALUES ('$email', '$username', '$password', '', '')";
     $result = $conn->query($sql);
 
     header("Location: login.php");

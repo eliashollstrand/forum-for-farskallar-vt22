@@ -50,12 +50,12 @@
                 $mail = new PHPMailer(true);
 
                 try {
-                    $mail->SMTPDebug = 1;                      
+                    $mail->SMTPDebug = 0;                      
                     $mail->isSMTP();                                           
                     $mail->Host       = 'smtp.gmail.com';                     
                     $mail->SMTPAuth   = true;                               
-                    $mail->Username   = '';                  
-                    $mail->Password   = '';                   
+                    $mail->Username   = 'forumforfarskallar@gmail.com';                  
+                    $mail->Password   = 'farskalle123';                   
                     $mail->SMTPSecure = "tls";            
 
                     $mail->setFrom('forumforfarskallar@gmail.com', 'Forum för fårskallar');
@@ -80,5 +80,5 @@
         $result = $conn->query($sql);
     }
 
-    // header("Location: http://localhost/forum-for-farskallar/readtopic.php?topic=$topic&op=$op");
+    header("Location: http://localhost/forum-for-farskallar/readtopic.php?topic=$topic&op=$op");
 ?>

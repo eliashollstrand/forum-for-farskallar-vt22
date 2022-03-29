@@ -10,6 +10,7 @@ session_start();
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <style>
     body {
@@ -56,9 +57,12 @@ session_start();
             <button class='btn btn-secondary'>Tillbaka till trådarna</button>
             </a>";
         echo "<br><br><h2 style='display: inline-block;'>" . $topic . "</h2>";
-        echo "<a href='readtopic.php' style='text-decoration: none;'>
-                <button style='margin-bottom: 15px; margin-left: 10px; font-size: 10px; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;' class='btn btn-light'>Gilla denna tråd</i></button>
-            </a>";
+
+        echo "<button 
+        onclick=\"like('" . $user. "', '".$topic."');\" 
+        style='margin-bottom: 15px; margin-left: 10px; font-size: 10px; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'>
+        Gilla denna tråd</button>";
+
         echo "<p>Denna tråd startades av <strong>" . $op . "</strong></p>";
 
         $servername = "localhost";
@@ -98,6 +102,21 @@ session_start();
             </a>";
     }
 ?>
+<script>
+    function like(user, liked) 
+    {
 
+        $.ajax({
+            url: "like.php",
+            type: "POST",
+            data: {'username': user, 'liked': liked},                   
+            success: function(data)
+                        {
+                            alert(data);                                   
+                        }
+
+        });
+    }
+</script>
 </body>
 </html>
