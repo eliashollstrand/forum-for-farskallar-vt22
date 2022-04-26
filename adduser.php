@@ -30,25 +30,38 @@ if(!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+// $email = "";
+// $username = "";
+// $password = "";
+
 $email = $_POST["email"];
 $username = $_POST["username"];
 $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-$sql = "SELECT * from users where username = '$username'";
-$result = $conn->query($sql);
+if(!empty($email) && !empty($username) && !empty($password)) {
 
-if($result->num_rows == 0) {
-    $sql = "INSERT INTO users (email, username, password, subscriptions, liked) VALUES ('$email', '$username', '$password', '', '')";
+    $sql = "SELECT * from users where username = '$username'";
     $result = $conn->query($sql);
 
-    header("Location: login.php");
-    die();
-} else {
-    echo "Username already taken<br>";
-    echo "<a href='signup.html'>
-    <button style='margin-top: 10px;'>Go back</button>
- </a>";
+    if($result->num_rows == 0) {
+        $sql = "INSERT INTO users (email, username, password, subscriptions, liked) VALUES ('$email', '$username', '$password', '', '')";
+        $result = $conn->query($sql);
+    
+        header("Location: login.php");
+        die();
+    } else {
+        echo "Username already taken<br>";
+        echo "<a href='signup.html'>
+        <button style='margin-top: 10px;'>Gå tillbaka</button>
+     </a>";
+    
+    }
 
+} else {
+    echo "Fyll i alla fälten!<br>";
+    echo "<a href='signup.html'>
+        <button style='margin-top: 10px;'>Gå tillbaka</button>
+     </a>";
 }
 
 ?>

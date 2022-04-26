@@ -8,6 +8,7 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -21,9 +22,14 @@ session_start();
         vertical-align: inherit;
         border-color: inherit;
     }
-
     tr.result:nth-child(odd) {
         background-color: white;
+    }
+    #likeBtn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-left: 20px;
     }
 </style>
 <body>
@@ -56,14 +62,6 @@ session_start();
         echo "<br><a href='script.php'>
             <button class='btn btn-secondary'>Tillbaka till trådarna</button>
             </a>";
-        echo "<br><br><h2 style='display: inline-block;'>" . $topic . "</h2>";
-
-        echo "<button 
-        onclick=\"like('" . $user. "', '".$topic."');\" 
-        style='margin-bottom: 15px; margin-left: 10px; font-size: 10px; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'>
-        Gilla denna tråd</button>";
-
-        echo "<p>Denna tråd startades av <strong>" . $op . "</strong></p>";
 
         $servername = "localhost";
         $username = "root";
@@ -75,6 +73,30 @@ session_start();
         if(!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }   
+
+        echo "<br><br><h2 style='display: inline-block;'>" . $topic . "</h2>";
+
+        $sql = "SELECT * FROM users";
+        $result = $conn->query($sql);
+
+        while($row = $result->fetch_assoc()) {
+            $likes = explode(",", $row["liked"]);
+            if($row["username"] == $user) {
+                if(in_array($topic, $likes)) {
+                    echo "<button id='likeBtn' class='fa fa-heart' 
+                            onclick=\"like('" . $user. "', '".$topic."');\"></button>";
+                    break;
+                } 
+                else {
+                    echo "<button id='likeBtn' class='fa fa-heart-o' 
+                            onclick=\"like('" . $user. "', '".$topic."');\"></button>";
+                    break;
+                }
+            }
+
+        } 
+
+        echo "<p>Denna tråd startades av <strong>" . $op . "</strong></p>";
 
         $sql = "SELECT * FROM posts WHERE topic = '$topic'";
         $result = $conn->query($sql);
@@ -105,16 +127,13 @@ session_start();
 <script>
     function like(user, liked) 
     {
-
         $.ajax({
             url: "like.php",
             type: "POST",
             data: {'username': user, 'liked': liked},                   
-            success: function(data)
-                        {
-                            alert(data);                                   
-                        }
-
+            success: function(data) {
+                document.getElementById("likeBtn").className = data;
+            }
         });
     }
 </script>

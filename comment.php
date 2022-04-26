@@ -40,7 +40,6 @@
     while($row = $result->fetch_assoc()) {
         $subs = explode(",", $row["subscriptions"]);
         for($i = 0; $i < count($subs); $i++) {
-            // echo strlen(substr($subs[$i], 1));
             if(substr($subs[$i], 1) == $topic) {
                 
                 if($row["username"] == $user) {
