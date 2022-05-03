@@ -26,6 +26,7 @@ if(!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }   
 
+
 $sql = "SELECT * FROM users";
 $result = $conn->query($sql);
 
@@ -90,7 +91,12 @@ if($login_success) {
 
         $text = str_replace("***topic***", $row["topic"], $text_array[1]);
         $text = str_replace("***op***", $row["op"], $text);
-        $text = str_replace("***time***", $latest_updates[$i], $text);
+
+        for($j = 0; $j < count($topics); $j++) {
+            if($topics[$j] == $row["topic"]) {
+                $text = str_replace("***time***", $latest_updates[$j], $text);
+            }
+        }
 
         echo $text;  
         $i += 1; 
