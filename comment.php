@@ -53,8 +53,8 @@
                     $mail->isSMTP();                                           
                     $mail->Host       = 'smtp.gmail.com';                     
                     $mail->SMTPAuth   = true;                               
-                    $mail->Username   = '';            
-                    $mail->Password   = '';                   
+                    $mail->Username   = ''; // Forumets mail            
+                    $mail->Password   = ''; // Lösen till forumets mail                  
                     $mail->SMTPSecure = "tls";            
 
                     $mail->setFrom('forumforfarskallar@gmail.com', 'Forum för fårskallar');
